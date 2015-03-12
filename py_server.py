@@ -2,17 +2,17 @@ import socket
 HOST=''
 PORT=8000
 
-reply='Yes'
+reply=b'Yes'
 
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 s.bind((HOST,PORT))
-s.listen(3)
 print('LOG |||| listenning ')
+s.listen(1)
 conn,addr=s.accept()
-
-request=conn.recv(1024)
-
-print('LOG |||| request is ',request,end='\n')
 print('LOG |||| Connected by ',addr,end='\n')
-conn.sendall(reply.encode)
+while True:
+	request=conn.recv(1024).decode('UTF-8')
+	if not request:break
+	print('LOG |||| request is ',request,end='\n')
+	conn.sendall(reply)
 conn.close
